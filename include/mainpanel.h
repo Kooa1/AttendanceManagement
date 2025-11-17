@@ -13,7 +13,7 @@ class MainPanel final : QMainWindow{
 public:
     explicit MainPanel();
 
-    void Mat_to_QPixmap(const cv::Mat);
+    void Mat_to_QPixmap(const cv::Mat &src_mat);
 
 private:
 };

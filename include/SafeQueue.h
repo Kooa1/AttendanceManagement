@@ -13,9 +13,8 @@ private:
 
 
 public:
-    explicit  SafeQueue() {
+    explicit  SafeQueue() {}
 
-    }
 };
 
 #endif //FACEDETECTION_SAFEQUEUE_H

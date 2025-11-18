@@ -11,18 +11,29 @@
 #include <QDebug>
 
 #include <opencv2/opencv.hpp>
+#include <opencv2/objdetect.hpp>
 
 class Camera {
 public:
-    explicit Camera();
+    explicit Camera(std::queue<QPixmap> &pix_queue);
 
     void capture();
+
+    void stop();
 
 private:
     QPixmap Mat_to_QPixmap(const cv::Mat &src_mat);
 
+    std::vector<cv::Rect>  face_detection(const cv::Mat &src_mat);
+
+    cv::Mat draw_face_rectangle(const cv::Mat &frame, const std::vector<cv::Rect> &faces);
+
 private:
     cv::VideoCapture cap;
+
+    std::queue<QPixmap> &pix_queue;
+
+    cv::CascadeClassifier face_cascade;
 };
 
 

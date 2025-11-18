@@ -5,6 +5,8 @@
 #ifndef ZPLAYER_MAINPANEL_H
 #define ZPLAYER_MAINPANEL_H
 
+#include <iostream>
+
 #include <QWidget>
 #include <QLabel>
 #include <QTimer>
@@ -21,7 +23,7 @@ public:
     explicit MainPanel(QWidget *parent = nullptr);
 
 public slots:
-    void reflesh(const cv::Mat &frame);
+    void reflesh();
 
 private:
     void init_layout();
@@ -42,6 +44,10 @@ private:
     QVBoxLayout *main_vlayout;
 
     QHBoxLayout *main_hlayout;
+
+    std::queue<QPixmap> pix_queue;
+
+    bool capping;
 };
 
 

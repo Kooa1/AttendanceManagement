@@ -64,6 +64,7 @@ target_link_libraries(FaceDetection
         opencv_highgui
         opencv_imgcodecs
         opencv_video
+        opencv_objdetect
 )
 
 # MSVC 编译器选项

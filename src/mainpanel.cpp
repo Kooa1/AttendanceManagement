@@ -11,33 +11,48 @@ MainPanel::MainPanel(QWidget *parent)
       start(new QPushButton("cap")),
       stop(new QPushButton("stop")),
       main_vlayout(new QVBoxLayout(this)),
-      main_hlayout(new QHBoxLayout) {
+      main_hlayout(new QHBoxLayout),
+      camera(pix_queue) {
     init_layout();
     init_conn();
 }
 
-void MainPanel::reflesh(const cv::Mat &frame) {
+void MainPanel::reflesh() {
+    if (!pix_queue.empty()) {
+        const auto pix = pix_queue.front();
+        pix_queue.pop();
+        show_label->setPixmap(pix.scaled(show_label->size(), Qt::KeepAspectRatio));
+    }
 }
 
 void MainPanel::init_layout() {
-    show_label->setStyleSheet("background : white");
-
     main_vlayout->addWidget(show_label);
     main_vlayout->addLayout(main_hlayout);
 
     main_hlayout->addWidget(start);
     main_hlayout->addWidget(stop);
 
-    this->resize(400, 600);
+    this->resize(600, 400);
     this->show();
 }
 
 void MainPanel::init_conn() {
     connect(start, &QPushButton::clicked, this, [this]() {
         timer->start(33);
+        capping = true;
     });
 
     connect(timer, &QTimer::timeout, this, [this]() {
-        camera.capture();
+        if (capping) {
+            camera.capture();
+            reflesh();
+        } else {
+            timer->stop();
+        }
+    });
+
+    connect(stop, &QPushButton::clicked, this, [this]() {
+        capping = false;
+        show_label->setPixmap(QPixmap());
     });
 }

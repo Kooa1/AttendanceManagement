@@ -2,21 +2,42 @@
 // Created by 吴文泽 on 2025/11/17.
 //
 
-#include "../include/mainpanel.h"
+#include "mainpanel.h"
 
-MainPanel::MainPanel() {
-    this->resize(600, 400);
+MainPanel::MainPanel(QWidget *parent)
+    : QWidget(parent),
+      timer(new QTimer),
+      show_label(new QLabel),
+      start(new QPushButton("cap")),
+      stop(new QPushButton("stop")),
+      main_vlayout(new QVBoxLayout(this)),
+      main_hlayout(new QHBoxLayout) {
+    init_layout();
+    init_conn();
+}
+
+void MainPanel::reflesh(const cv::Mat &frame) {
+}
+
+void MainPanel::init_layout() {
+    show_label->setStyleSheet("background : white");
+
+    main_vlayout->addWidget(show_label);
+    main_vlayout->addLayout(main_hlayout);
+
+    main_hlayout->addWidget(start);
+    main_hlayout->addWidget(stop);
+
+    this->resize(400, 600);
     this->show();
 }
 
-void MainPanel::Mat_to_QPixmap(const cv::Mat &src_mat) {
-    cv::Mat rgb_mat;
+void MainPanel::init_conn() {
+    connect(start, &QPushButton::clicked, this, [this]() {
+        timer->start(33);
+    });
 
-    if (src_mat.channels() == 3) {
-        cv::cvtColor(src_mat, rgb_mat, cv::COLOR_BGR2RGB);
-    } else if (src_mat.channels() == 1) {
-        cv::cvtColor(src_mat, rgb_mat, cv::COLOR_GRAY2RGB);
-    } else {
-        rgb_mat = src_mat.clone();
-    }
+    connect(timer, &QTimer::timeout, this, [this]() {
+        camera.capture();
+    });
 }

@@ -58,6 +58,12 @@ target_link_libraries(FaceDetection
         Qt6::Core
         Qt6::Gui
         Qt6::Widgets
+        opencv_core
+        opencv_imgproc
+        opencv_videoio
+        opencv_highgui
+        opencv_imgcodecs
+        opencv_video
 )
 
 # MSVC 编译器选项

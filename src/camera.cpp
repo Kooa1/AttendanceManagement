@@ -19,7 +19,6 @@ void Camera::capture() {
         return;
     }
 
-
     pix_queue.push(Mat_to_QPixmap(frame));
 }
 
@@ -38,7 +37,7 @@ QPixmap Camera::Mat_to_QPixmap(const cv::Mat &src_mat) {
         rgb_mat = src_mat.clone();
     }
 
-    auto dest_frame = draw_face_rectangle(src_mat, face_detection(src_mat));
+    auto dest_frame = draw_face_rectangle(rgb_mat, face_detection(rgb_mat));
 
     const QImage ret_img(dest_frame.data, dest_frame.cols, dest_frame.rows, dest_frame.step, QImage::Format_RGB888);
     return QPixmap::fromImage(ret_img);
@@ -58,7 +57,7 @@ std::vector<cv::Rect> Camera::face_detection(const cv::Mat &src_mat) {
         1.1,
         3,
         0,
-        cv::Size(30, 30)
+        cv::Size(60, 60)
     );
 
     return faces;

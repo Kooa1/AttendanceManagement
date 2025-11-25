@@ -37,7 +37,7 @@ QPixmap Camera::Mat_to_QPixmap(const cv::Mat &src_mat) {
         rgb_mat = src_mat.clone();
     }
 
-    auto dest_frame = draw_face_rectangle(rgb_mat, face_detection(rgb_mat));
+    const auto dest_frame = draw_face_rectangle(rgb_mat, face_detection(rgb_mat));
 
     const QImage ret_img(dest_frame.data, dest_frame.cols, dest_frame.rows, dest_frame.step, QImage::Format_RGB888);
     return QPixmap::fromImage(ret_img);

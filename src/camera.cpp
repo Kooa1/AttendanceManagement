@@ -19,14 +19,14 @@ void Camera::capture() {
         return;
     }
 
-    pix_queue.push(Mat_to_QPixmap(frame));
+    pix_queue.push(mat_to_q_pixmap(frame));
 }
 
 void Camera::stop() {
     cap.release();
 }
 
-QPixmap Camera::Mat_to_QPixmap(const cv::Mat &src_mat) {
+QPixmap Camera::mat_to_q_pixmap(const cv::Mat &src_mat) {
     cv::Mat rgb_mat;
 
     if (src_mat.channels() == 3) {

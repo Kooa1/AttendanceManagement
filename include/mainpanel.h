@@ -23,7 +23,7 @@ public:
     explicit MainPanel(QWidget *parent = nullptr);
 
 public slots:
-    void reflesh();
+    void refresh();
 
 private:
     void init_layout();

@@ -22,7 +22,7 @@ public:
     void stop();
 
 private:
-    QPixmap Mat_to_QPixmap(const cv::Mat &src_mat);
+    QPixmap mat_to_q_pixmap(const cv::Mat &src_mat);
 
     std::vector<cv::Rect>  face_detection(const cv::Mat &src_mat);
 

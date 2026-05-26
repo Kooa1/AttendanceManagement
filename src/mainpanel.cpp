@@ -17,7 +17,7 @@ MainPanel::MainPanel(QWidget *parent)
     init_conn();
 }
 
-void MainPanel::reflesh() {
+void MainPanel::refresh() {
     if (!pix_queue.empty()) {
         const auto pix = pix_queue.front();
         pix_queue.pop();
@@ -45,7 +45,7 @@ void MainPanel::init_conn() {
     connect(timer, &QTimer::timeout, this, [this]() {
         if (capping) {
             camera.capture();
-            reflesh();
+            refresh();
         } else {
             timer->stop();
         }
